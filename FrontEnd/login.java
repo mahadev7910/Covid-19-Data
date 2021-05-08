@@ -1,9 +1,13 @@
+package typroject;
+
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.*;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-
-
-public class login extends JFrame {
+public class login extends JFrame implements ActionListener {
 
 	JPanel p1;
 	JLabel j1,j2;
@@ -15,7 +19,7 @@ public class login extends JFrame {
 
 		setTitle("Login");
 		
-		ImageIcon img = new ImageIcon("wp3248934-plain-colour-wallpaper.jpg");
+		ImageIcon img = new ImageIcon("/home/maddy/NetBeansProjects/TYProject/src/typroject/images/wp3248934-plain-colour-wallpaper.jpg");
 		j1 = new JLabel("",img,JLabel.CENTER);
 		j1.setBounds(0,0,860,670);
 		
@@ -25,9 +29,9 @@ public class login extends JFrame {
 
 		j2.setBounds(150,10,100,50);
 
-		t1 = new JTextField("Enter UserID");
-		t2 = new JPasswordField("Enter Password");
-		t3 = new JTextField("Enter Covid Center ID");
+		t1 = new JTextField();
+		t2 = new JPasswordField();
+		t3 = new JTextField();
 		
 		t2.setEchoChar('*');
 
@@ -53,7 +57,9 @@ public class login extends JFrame {
 		b2.setFont(f);
 		b1.setBackground(new Color(120,230,120));
 		b2.setBackground(new Color(234,244,127));
-
+                b1.addActionListener(this);
+                b2.addActionListener(this);
+                
 		p1 = new JPanel();
 
 		p1.setLayout(null);		
@@ -74,10 +80,69 @@ public class login extends JFrame {
 
 		setVisible(true);
 		setSize(860,670);
-		setLocation(50,0);
+		setLocation(200,0);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-
+        
+        String password,uid,covid;
+        
+        public void actionPerformed(ActionEvent ae){
+            
+            if(ae.getSource() == b1){
+                
+               uid = t1.getText();
+               password = t2.getText();
+               covid = t3.getText();
+               
+               if(uid.equals("") || password.equals("") || covid.equals(""))
+                   new errorVolunteer().error();
+               else
+                   try{
+                       validateUser();
+               } catch (SQLException ex) {
+                   System.out.println(ex);
+               }   
+            }
+            else
+                if(ae.getSource() == b2){
+                    dispose();
+                    new cloneHome();
+                }
+        }
+        
+        public void validateUser() throws SQLException {
+            
+            Connection c;
+            PreparedStatement smt;
+            
+            try{
+                Class.forName("org.postgresql.Driver");
+                c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres","maddy","maddy20");
+                System.out.println("Connection Eshtablished");
+               
+                String q;
+                q = "SELECT * FROM staff WHERE id = (?) and password = (?) and cov_id = (?)";
+                
+                smt = c.prepareStatement(q);
+                
+                smt.setInt(1,Integer.parseInt(uid));
+                smt.setString(2,password);
+                smt.setInt(3,Integer.parseInt(covid));
+     
+                ResultSet rs = smt.executeQuery();
+                
+                if(rs.next()){
+                System.out.println("UserId = "+rs.getInt(1));
+                System.out.println("Password = "+rs.getString(2));
+                System.out.println("Cov_id = "+rs.getInt(3));
+                }
+                else
+                    new errorVolunteer().invalidUser();
+                
+                c.close();
+                        
+            }catch(ClassNotFoundException | NumberFormatException e){System.out.println(e);}
+        }    
 	public static void main(String[] args){
 
 		new login();

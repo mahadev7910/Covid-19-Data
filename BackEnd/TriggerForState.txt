@@ -1,0 +1,43 @@
+create or replace function stateData() RETURNS TRIGGER AS
+'DECLARE 
+	total float := 0;
+	act float := 0;
+	reco float := 0;
+	de float := 0;
+	rrate float := 0;
+	drate float := 0;
+	stcode char(2) :='''';
+	dd date;
+	one int:=0;
+		
+BEGIN
+	
+	SELECT INTO stcode state_code FROM district WHERE dist_id = new.dist_id;
+
+	SELECT INTO total,act,reco,de SUM(cases),SUM(active),SUM(recovered),SUM(deaths) 
+	FROM district_data,district
+	WHERE last_update = new.last_update and district.dist_id = district_data.dist_id and state_code = stcode;
+	
+	rrate := (reco/(total-de))*100;
+	drate := (de/total)*100;
+	
+	select into one 1 from state_data where state_code = stcode and last_update = new.last_update;
+	
+IF one = 1 THEN	
+
+	UPDATE state_data SET cases = total,active = act,recovered = reco,deaths = de,recovery_rate = rrate,death_rate = drate WHERE state_code = stcode;
+
+ELSE
+		INSERT INTO state_data(state_code,cases,active,recovered,deaths,recovery_rate,death_rate,last_update) values(stcode,total,act,reco,de,rrate,drate,new.last_update);
+
+END IF;	
+
+RETURN NULL;
+
+END;
+'LANGUAGE 'plpgsql';
+
+create trigger stateUpdate after insert or update on district_data
+for each row execute procedure stateData();
+
+

@@ -1,10 +1,12 @@
+package typroject;
+
 import java.awt.*;
 import java.awt.Image.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.event.*;
 
-public class cloneHome implements ActionListener {
+class cloneHome implements ActionListener {
 	
 	JFrame f;
 	JButton jb,js;
@@ -23,7 +25,7 @@ public class cloneHome implements ActionListener {
 		f = new JFrame("COVID-19 DATA");
 
 		// changing Size Of the Image for fit into JButton;
-		img1 = new ImageIcon("images/download.jpg");
+		img1 = new ImageIcon("/home/maddy/NetBeansProjects/TYProject/src/typroject/images/download.jpg");
 		dab1 = img1.getImage();
 		cdab1 = dab1.getScaledInstance(1190,150,java.awt.Image.SCALE_SMOOTH);
 		img1 = new ImageIcon(cdab1);
@@ -74,7 +76,7 @@ public class cloneHome implements ActionListener {
 		
 		
 		// Setting BackGround Image to Frame :-
-		ImageIcon img = new ImageIcon("images/istock-1214212730.jpg");
+		ImageIcon img = new ImageIcon("/home/maddy/NetBeansProjects/TYProject/src/typroject/images/istock-1214212730.jpg");
 		jBack = new JLabel("",img,JLabel.CENTER);
 		jBack.setBounds(0,0,1200,600);
 		f.add(jBack);

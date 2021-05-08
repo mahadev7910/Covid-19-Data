@@ -2,28 +2,38 @@ create or replace function countryData() RETURNS trigger as
 
 'DECLARE
 
-	cas float := 0;
+	total float := 0;
 	act float := 0;
-	rec float := 0;
-	dea float := 0;
+	reco float := 0;
+	de float := 0;
 	rrate float := 0;
 	drate float := 0;
-	
+	stcode char(2) :='''';
+	dd date;
+	one int:=0;
+		
 BEGIN
 	
-	SELECT INTO cas,act,rec,dea SUM(cases),SUM(active),SUM(recovered),SUM(deaths)
-	FROM state_health_department
-	WHERE state_health_department.country_code = new.country_code;
+	SELECT INTO total,act,reco,de SUM(cases),SUM(active),SUM(recovered),SUM(deaths) 
+	FROM state_data,state
+	WHERE last_update = new.last_update and state.state_code = state_data.state_code;
 	
-	rrate := (rec/(cas-dea))*100;
-	drate := (dea/cas)*100;
+	rrate := (reco/(total-de))*100;
+	drate := (de/total)*100;
 	
-	UPDATE indian_health_department SET cases = cas,active = act,recovered = rec,deaths = dea,recovery_rate = rrate,death_rate = drate
-	WHERE country_code = new.country_code;
-	RETURN null;
+	select into one 1 from country_data where last_update = new.last_update;
 	
+IF one = 1 THEN	
+
+	UPDATE country_data SET cases = total,active = act,recovered = reco,deaths = de,recovery_rate = rrate,death_rate = drate;
+
+ELSE
+		INSERT INTO country_data(country_code,cases,active,recovered,deaths,recovery_rate,death_rate,last_update) values(''IND'',total,act,reco,de,rrate,drate,new.last_update);
+
+END IF;	
+RETURN NULL;	
 END;
 'LANGUAGE 'plpgsql';
 
-CREATE TRIGGER countryUpdate AFTER INSERT OR UPDATE ON state_health_department
+CREATE TRIGGER countryUpdate AFTER INSERT OR UPDATE ON state_data
 FOR EACH ROW EXECUTE PROCEDURE countryData();	
