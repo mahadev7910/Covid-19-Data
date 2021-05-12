@@ -1,10 +1,14 @@
+package typroject;
 
-public class covidCenterData extends javax.swing.JFrame {
+class covidCenterData extends javax.swing.JFrame {
 
     public covidCenterData() {
         initComponents();
+        setVisible(true);
     }
 
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -81,8 +85,9 @@ public class covidCenterData extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(860, 590));
         setSize(new java.awt.Dimension(0, 0));
 
-        jPanel1.setBackground(new java.awt.Color(249, 244, 187));
+        jPanel1.setBackground(new java.awt.Color(253, 236, 163));
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 2, 1, new java.awt.Color(0, 0, 0)));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(860, 160));
 
         jLabel1.setFont(new java.awt.Font("Ubuntu Light", 0, 18)); // NOI18N
@@ -191,13 +196,13 @@ public class covidCenterData extends javax.swing.JFrame {
         jLabel13.setText("Confirmed Cases :");
 
         jLabel14.setFont(new java.awt.Font("Ubuntu Light", 1, 20)); // NOI18N
-        jLabel14.setText("Recovered Cases :");
+        jLabel14.setText("Recovered Cases:");
 
         jLabel15.setFont(new java.awt.Font("Ubuntu Light", 1, 20)); // NOI18N
         jLabel15.setText("Deaths :");
 
         jLabel16.setFont(new java.awt.Font("Ubuntu Light", 1, 20)); // NOI18N
-        jLabel16.setText("On Ventilator  :");
+        jLabel16.setText("Active Cases   :");
 
         jTextField4.setFont(new java.awt.Font("Ubuntu", 1, 16)); // NOI18N
         jTextField4.setPreferredSize(new java.awt.Dimension(100, 30));
@@ -218,6 +223,11 @@ public class covidCenterData extends javax.swing.JFrame {
 
         jTextField6.setFont(new java.awt.Font("Ubuntu", 1, 16)); // NOI18N
         jTextField6.setPreferredSize(new java.awt.Dimension(100, 30));
+        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField6ActionPerformed(evt);
+            }
+        });
 
         jTextField7.setFont(new java.awt.Font("Ubuntu", 1, 16)); // NOI18N
         jTextField7.setPreferredSize(new java.awt.Dimension(100, 30));
@@ -259,6 +269,11 @@ public class covidCenterData extends javax.swing.JFrame {
         jButton2.setText("Reset");
         jButton2.setBorder(null);
         jButton2.setPreferredSize(new java.awt.Dimension(90, 30));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(212, 34, 76));
         jButton3.setFont(new java.awt.Font("Ubuntu Light", 1, 17)); // NOI18N
@@ -383,23 +398,23 @@ public class covidCenterData extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
-        // TODO add your handling code here:
+   
     }//GEN-LAST:event_jTextField8ActionPerformed
 
     private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
-        // TODO add your handling code here:
+   
     }//GEN-LAST:event_jTextField9ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
+     
     }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+    
         String cs, rec, de, ov, cr;
 
         cs = jTextField4.getText();
@@ -415,40 +430,28 @@ public class covidCenterData extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+
+            new Dialog().cancelCovData();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(covidCenterData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(covidCenterData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(covidCenterData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(covidCenterData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+            jTextField4.setText("");
+            jTextField5.setText("");
+            jTextField9.setText("");
+            jTextField7.setText("");
+            jTextField8.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
-        /* Create and display the form */
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6ActionPerformed
+
+    public static void main(String args[]) {
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new covidCenterData().setVisible(true);
+                new covidCenterData();//.setVisible(true);
             }
         });
     }

@@ -18,7 +18,7 @@ BEGIN
 	FROM district_data,district
 	WHERE last_update = new.last_update and district.dist_id = district_data.dist_id and state_code = stcode;
 	
-	rrate := (reco/(total-de))*100;
+	rrate := (reco/(act-de))*100;
 	drate := (de/total)*100;
 	
 	select into one 1 from state_data where state_code = stcode and last_update = new.last_update;
