@@ -11,7 +11,7 @@ class cloneHome implements ActionListener {
 	JFrame f;
 	JButton jb,js;
 	JTextField searchBar;
-	JTextArea t1,t2,t3;
+	JLabel l1,l2,l3;
 	JComboBox cb1,cb2;
 	JLabel jBack,jl;
 	ImageIcon img1,img2;
@@ -42,37 +42,32 @@ class cloneHome implements ActionListener {
 		//f.getContentPane().setBackground(Color.BLACK);
 		
 		// Text Area :-
-		t1 = new JTextArea(4,11);
-		t2 = new JTextArea(4,11);
-		t3 = new JTextArea(4,11);
+		l1 = new JLabel();
+		l2 = new JLabel();
+		l3 = new JLabel();
 		
-		t1.setFont(new Font("Verdana",Font.BOLD,21));
-		t2.setFont(new Font("Verdana",Font.BOLD,21));
-		t3.setFont(new Font("Verdana",Font.BOLD,21));
+		l1.setFont(new Font("Verdana",Font.BOLD,21));
+		l2.setFont(new Font("Verdana",Font.BOLD,21));
+		l3.setFont(new Font("Verdana",Font.BOLD,21));
 		
-		t1.setBackground(Color.LIGHT_GRAY);
-		t2.setBackground(Color.PINK);
-		t3.setBackground(Color.cyan);
+		/*l1.setBackground(Color.LIGHT_GRAY);
+		l2.setBackground(new Color(121,22,12));
+		l3.setBackground(Color.cyan);*/
 		
-		t1.setBorder(new LineBorder(Color.BLACK,1));
-		t2.setBorder(new LineBorder(Color.BLACK,1));
-		t3.setBorder(new LineBorder(Color.BLACK,1));
+		l1.setBorder(new LineBorder(Color.BLACK,1));
+		l2.setBorder(new LineBorder(Color.BLACK,1));
+		l3.setBorder(new LineBorder(Color.BLACK,1));
 		
-		t1.setWrapStyleWord(true);
-		t1.setLineWrap(true);
-		t2.setWrapStyleWord(true);
-		t2.setLineWrap(true);
-		t3.setWrapStyleWord(true);
-		t3.setLineWrap(true);
-		
-		t1.setText("CASES");
-		t1.append(" ");
-		t1.append(" ");
-		t1.append("9,89,980");
+		/*l1.setWrapStyleWord(true);
+		l1.setLineWrap(true);
+		l2.setWrapStyleWord(true);
+		l2.setLineWrap(true);
+		l3.setWrapStyleWord(true);
+		l3.setLineWrap(true);*/
 		
 		// icrease radioButton Text size :-
 		//Font newRadioButtonFont=new Font(rb1.getFont().getName(),rb1.getFont().getStyle(),22);
-        //rb1.setFont(newRadioButtonFont);
+                //rb1.setFont(newRadioButtonFont);
 		
 		
 		// Setting BackGround Image to Frame :-
@@ -82,9 +77,9 @@ class cloneHome implements ActionListener {
 		f.add(jBack);
 		
 		jb.setBounds(7,57,1190,150);
-		t1.setBounds(130,218,270,100);
-		t2.setBounds(437,218,270,100);
-		t3.setBounds(740,218,270,100);
+		l1.setBounds(130,218,270,100);
+		l2.setBounds(437,218,270,100);
+		l3.setBounds(740,218,270,100);
 		menuBar();
 		searchBar();
 
@@ -92,14 +87,15 @@ class cloneHome implements ActionListener {
 		jBack.setLayout(null);//new FlowLayout(FlowLayout.CENTER,40,0));
 		
 		jBack.add(jb);
-		jBack.add(t1);
-		jBack.add(t2);
-		jBack.add(t3);
+		jBack.add(l1);
+		jBack.add(l2);
+		jBack.add(l3);
 		
 		f.pack();
 		f.setSize(1200,700);
 		f.setVisible(true);
 		f.setLocation(0,0);
+                //f.setLocationRelativeTo(null);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
@@ -160,14 +156,14 @@ class cloneHome implements ActionListener {
 	public void searchBar(){
 
 
-		searchBar = new JTextField("MAHARSHTRA",25);
+		searchBar = new JTextField("",25);
 		
 		searchBar.setFont(new Font("serif",Font.BOLD,15));
 		searchBar.setBorder(new LineBorder(new Color(255,204,51),1));
 		searchBar.setBackground(new Color(0,0,0,80));
 		searchBar.setForeground(new Color(255,204,51));
 
-		js = new JButton(new ImageIcon("images/search.png"));;
+		js = new JButton(new ImageIcon("/home/maddy/NetBeansProjects/TYProject/src/typroject/images/search.png"));
 		js.setBackground(new Color(255,204,51));
 		js.setBorder(new LineBorder(Color.BLACK,2));
 
@@ -200,17 +196,22 @@ class cloneHome implements ActionListener {
 			new login();
 			f.dispose();
 		}
+                if(ae.getSource() == js){
+                    
+                    int[] r = new search().searchData(searchBar.getText());
+                    for(int a : r)
+                        System.out.println(a+" ");
+                    
+//                    JLabel cs = new JLabel("Cases");
+//                    JLabel rd = new JLabel("Recovered");
+//                    JLabel dt = new JLabel("Deaths");
+//                    
+//                    t1.setText(cs);
+                    
+                        
+                }
 
 	}
-
-	/*public void menuSelected(MenuEvent me){
-
-		if(me.getSource() == m2){
-	
-			new login();
-			f.dispose();
-		}
-	}*/
 
 	public static void main(String args[]){
 	

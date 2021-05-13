@@ -21,7 +21,7 @@ public class login extends JFrame implements ActionListener {
 		
 		ImageIcon img = new ImageIcon("/home/maddy/NetBeansProjects/TYProject/src/typroject/images/wp3248934-plain-colour-wallpaper.jpg");
 		j1 = new JLabel("",img,JLabel.CENTER);
-		j1.setBounds(0,0,860,670);
+		j1.setBounds(0,0,1200,700);
 		
 		j2 = new JLabel("Staff",JLabel.CENTER);
 		j2.setFont(new Font("Serif",Font.BOLD,33));
@@ -64,7 +64,7 @@ public class login extends JFrame implements ActionListener {
 
 		p1.setLayout(null);		
 		p1.setSize(400,500);		
-		p1.setBounds(225,70,400,500);
+		p1.setBounds(405,70,400,500);
 		p1.setBackground(new Color(0,0,0,70));
 		
 		p1.add(j2);
@@ -79,14 +79,17 @@ public class login extends JFrame implements ActionListener {
 		j1.add(p1);
 
 		setVisible(true);
-		setSize(860,670);
-		setLocation(200,0);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(1200,700);
+                //setSize(860,670);
+		setLocation(0,0);
+		//setLocationRelativeTo(null);
+                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
         
-        String password,uid,covid;
         
         public void actionPerformed(ActionEvent ae){
+        
+            String password,uid,covid;
             
             if(ae.getSource() == b1){
                 
@@ -95,10 +98,10 @@ public class login extends JFrame implements ActionListener {
                covid = t3.getText();
                
                if(uid.equals("") || password.equals("") || covid.equals(""))
-                   new errorVolunteer().error();
+                   new Dialog().error();
                else
                    try{
-                       validateUser();
+                       validateUser(password,uid,covid);
                } catch (SQLException ex) {
                    System.out.println(ex);
                }   
@@ -106,11 +109,11 @@ public class login extends JFrame implements ActionListener {
             else
                 if(ae.getSource() == b2){
                     dispose();
-                    new cloneHome();
+                    new home();
                 }
         }
         
-        public void validateUser() throws SQLException {
+        public void validateUser(String pass,String uid,String covid) throws SQLException {
             
             Connection c;
             PreparedStatement smt;
@@ -120,24 +123,26 @@ public class login extends JFrame implements ActionListener {
                 c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres","maddy","maddy20");
                 System.out.println("Connection Eshtablished");
                
-                String q;
-                q = "SELECT * FROM staff WHERE id = (?) and password = (?) and cov_id = (?)";
+                int id,cid;
+                id = Integer.parseInt(uid);
+                cid = Integer.parseInt(covid);
+                
+                String q,name,mail;
+                q = "SELECT * FROM staff WHERE id = \'"+id+"\'"+" and password = \'"+pass+"\'"+" and cov_id = \'"+cid+"\'";
                 
                 smt = c.prepareStatement(q);
-                
-                smt.setInt(1,Integer.parseInt(uid));
-                smt.setString(2,password);
-                smt.setInt(3,Integer.parseInt(covid));
-     
+              
                 ResultSet rs = smt.executeQuery();
                 
                 if(rs.next()){
-                System.out.println("UserId = "+rs.getInt(1));
-                System.out.println("Password = "+rs.getString(2));
-                System.out.println("Cov_id = "+rs.getInt(3));
+
+                    name = rs.getString(3);
+                    mail = rs.getString(4);
+                    dispose();
+                    new covidCenterData(id,name,mail,cid);
                 }
                 else
-                    new errorVolunteer().invalidUser();
+                    new Dialog().invalidUser();
                 
                 c.close();
                         

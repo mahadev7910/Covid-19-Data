@@ -54,7 +54,7 @@ class regForm extends JFrame implements ActionListener {
         jl12 = new JLabel("Pincode");
         jl13 = new JLabel("Qualification");
         jl14 = new JLabel("Profession");
-        jl15 = new JLabel("Availbility");
+        jl15 = new JLabel("Availbility(Hrs per Day)");
 
         // JComboBox :
         cg = new JComboBox(new String[]{"---", "Male", "Female", "Transgender"});
@@ -137,7 +137,7 @@ class regForm extends JFrame implements ActionListener {
         p2.setBorder(new LineBorder(Color.BLACK, 2));
         p2.setPreferredSize(new Dimension(830, 500));
         p2.setBackground(Color.LIGHT_GRAY);
-        p2.setBounds(16, 30, 830, 500);
+        p2.setBounds(150, 20, 830, 500);
 
         p2.add(p1);
         p2.add(submit);
@@ -151,7 +151,7 @@ class regForm extends JFrame implements ActionListener {
 
         JLabel ad = new JLabel(img);
         ad.setBorder(new LineBorder(Color.BLACK, 1));
-        ad.setBounds(16, 530, 830, 140);
+        ad.setBounds(150, 520, 830, 140);
 
         setLayout(null);
         getContentPane().setBackground(Color.GRAY);
@@ -160,8 +160,9 @@ class regForm extends JFrame implements ActionListener {
         add(ad);
 
         setVisible(true);
-        setSize(860, 700);
-        setLocation(200, 0);
+        //setSize(860, 700);
+        setSize(1200,700);
+        setLocation(0, 0);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
     
@@ -172,7 +173,8 @@ class regForm extends JFrame implements ActionListener {
 
         if(ae.getSource() == cancel){
             dispose();
-            new cloneHome();
+            new home();
+            //new covidCenterData();.setVisible(true);
         }
         else
         if (ae.getSource() == submit) {
@@ -185,9 +187,9 @@ class regForm extends JFrame implements ActionListener {
         state = t11.getText();
         pin = t12.getText();
        
-        if (fname.equals("") || lname.equals("")) {
+        if (fname.isEmpty() || lname.isEmpty()) {
 
-            new errorVolunteer().error();
+            new Dialog().error();
         }
         else{
              try{
@@ -223,14 +225,17 @@ class regForm extends JFrame implements ActionListener {
             //smt.setInt(7, Integer.parseInt(pin));
             smt.addBatch();
             smt.executeBatch();
+            
             c.close();
-            new errorVolunteer().success();
+            new Dialog().success();
+            dispose();
+            new home();
 
         } catch (ClassNotFoundException | NumberFormatException e) {
 
             System.out.println(e);
         }
-
+        
     }
 }
 
